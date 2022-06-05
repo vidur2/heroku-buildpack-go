@@ -244,6 +244,7 @@ ensureGB() {
 
         start "Installing GB v${GBVersion}"
             pushd "${gbPath}" &> /dev/null
+                make c-build
                 go install ./...
             popd &> /dev/null
         finished
@@ -379,6 +380,7 @@ setupGOPATH() {
 
 installPkgs() {
     step "Running: go install -v ${FLAGS[@]} ${pkgs}"
+    make c-build
     go install -v "${FLAGS[@]}" ${pkgs} 2>&1
 }
 
@@ -592,6 +594,7 @@ case "${TOOL}" in
             ensureInPath "godep_linux_amd64" "${cache}/godep/bin"
 
             step "Running: godep go install -v ${FLAGS[@]} ${pkgs}"
+            make c-build
             godep go install -v "${FLAGS[@]}" ${pkgs} 2>&1
         else
             massagePkgSpecForVendor
