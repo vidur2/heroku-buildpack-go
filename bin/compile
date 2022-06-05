@@ -294,7 +294,12 @@ ensureGB() {
 
         start "Installing GB v${GBVersion}"
             pushd "${gbPath}" &> /dev/null
-                make c-build
+                export CC=gcc
+                cd lib/regression && ${CACHE_DIR}/cargo build --release
+                cp lib/regression/target/release/libregression.a lib/
+                cp lib/regression/target/release/libregression.a dataHandler/
+                cp lib/regression/target/release/libregression.a tests/
+                cp lib/regression/target/release/libregression.a googleApiInteraction/
                 go install ./...
             popd &> /dev/null
         finished
@@ -430,7 +435,11 @@ setupGOPATH() {
 
 installPkgs() {
     step "Running: go install -v ${FLAGS[@]} ${pkgs}"
-    make c-build
+    cd lib/regression && ${CACHE_DIR}/cargo build --release
+    cp lib/regression/target/release/libregression.a lib/
+    cp lib/regression/target/release/libregression.a dataHandler/
+    cp lib/regression/target/release/libregression.a tests/
+    cp lib/regression/target/release/libregression.a googleApiInteraction/
     go install -v "${FLAGS[@]}" ${pkgs} 2>&1
 }
 
@@ -644,7 +653,11 @@ case "${TOOL}" in
             ensureInPath "godep_linux_amd64" "${cache}/godep/bin"
 
             step "Running: godep go install -v ${FLAGS[@]} ${pkgs}"
-            make c-build
+            cd lib/regression && ${CACHE_DIR}/cargo build --release
+            cp lib/regression/target/release/libregression.a lib/
+            cp lib/regression/target/release/libregression.a dataHandler/
+            cp lib/regression/target/release/libregression.a tests/
+            cp lib/regression/target/release/libregression.a googleApiInteraction/
             godep go install -v "${FLAGS[@]}" ${pkgs} 2>&1
         else
             massagePkgSpecForVendor
