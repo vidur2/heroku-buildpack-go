@@ -53,7 +53,7 @@ if [ ! -x "$CARGO_HOME/bin/rustc" ]; then
   exit 1
 fi
 
-exec bash
+source /tmp/codon/tmp/cache/cargo/env
 
 mkdir -p "$1" "$2"
 build=$(cd "$1/" && pwd)
