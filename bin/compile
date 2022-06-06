@@ -48,6 +48,12 @@ set -eo pipefail
 #     ./rustup.sh -y --default-toolchain "$VERSION"
 
 
+echo "-----> Downloading rustup"
+curl https://sh.rustup.rs -sSf > rustup.sh
+chmod u+x rustup.sh
+echo "-----> Using rustup to install Rust channel $VERSION"
+./rustup.sh -y --default-toolchain "$VERSION"
+
 mkdir -p "$1" "$2"
 build=$(cd "$1/" && pwd)
 cache=$(cd "$2/" && pwd)
